@@ -1,0 +1,37 @@
+##  新安装一个库之后如何让系统能够找到它
+方法一：如果安装在/lib或/usr/lib等目录下，那么ld默认能够找到，无需其他操作。
+方法二：如果安装在其他目录，则有下面两种方法来让ld找到动态库
+  1, export LD_LIBRARY_PATH=某动态库所在目录
+  	(上面语句的意思是,将动态库所在目录变成一个共享库目录)
+  2, 编辑/etc/ld.so.conf文件，添加库文件所在目录的路径
+     运行ldconfig，该命令会重建/etc/ld.so.cache文件
+
+#########################################################################
+  https://www.cnblogs.com/fnlingnzb-learner/p/6743367.html     （安装编译json的方法） 
+
+1，以下面两个为例，下载下面两个tar包
+    scons-2.1.0.tar.gz 
+    tar -zvxf jsoncpp-src-0.5.0.tar.gz
+    
+2、解压scons-2.1.0.tar.gz
+    tar -zvxf scons-2.1.0.tar.gz
+   进入到解压目录scons-2.1.0下面，执行命令：
+    sudo python setup.py install
+    
+3、解压jsconcpp
+    tar -zvxf jsoncpp-src-0.5.0.tar.gz
+   进入到jsoncpp解压目录下，执行命令：
+    sudo scons platform=linux-gcc 
+    
+4，此时，头文件在jsoncpp-src-0.5.0/include/中；库文件在jsoncpp-src-0.5.0/libs/中
+
+5、如果为了方便，可以将下面的几个文件拷贝到系统默认目录下
+   将/jsoncpp-src-0.5.0/include/目录下的json文件夹拷贝到/usr/include/
+   将jsoncpp-src-0.5.0/libs/linux-gcc-4.9.1/目录下的libjson_linux-gcc-4.9.1_libmt.a 拷贝到/usr/local/lib/下，并为了方便使用，将其重命名为libjson.a
+
+#########################################################################
+1,(注意，按照上面的方法，/usr/lib64下不会出现*json*.so动态库文件)
+   但是我这有，可能是以前试安装的时候安装的
+2,经过下面的编译安装后，动态库和头文件都在/home/hz/download/2,经过下面的编译安装后，
+  动态库和头文件都在/home/hz/download/jsoncpp-src-0.5.0中
+  （include是头文件；libs是动态库和静态库）

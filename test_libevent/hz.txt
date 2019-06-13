@@ -1,0 +1,40 @@
+###########################################
+1，在/home/hz/download中下载了libevent-2.0.10-stable.tar.gz
+   wget https://www.monkey.org/~provos/libevent-2.0.10-stable.tar.gz
+
+2，tar zxvf libevent-2.0.10-stable.tar.gz
+   cd libevent-2.0.10-stable
+   ./config -prefix=/usr/lib/libevent (注意，我先在/usr/lib中创建了libevent目录)
+   make          (编译)
+   make install  (安装)
+   (由于执行了./config语句，所以关于libevent的东西都安装到/usr/lib/libevent目录下)
+
+3，由于include目录文件，静态库/动态库不在默认目录下，所以每次编译时都需要指定
+  eg. g++ xx.c -o xx -I/usr/lib/libevent/include -L/usr/lib/libevent/lib -levent
+
+######### API ##################################
+#include<event.h>
+event_init()初始化，调用函数库中的函数之前，必须先调用该函数
+Event_base_new()
+
+event_set()初始化结构体成员
+event_add()将结构体添加到受监视事件列表中
+event_dispatch()来循环和分派事件
+
+#include<event2/event.h>
+bufferevent_new()初始化bufferevent结构体
+bufferevent_enable()
+bufferevent_disable()
+bufferevent_read()
+bufferevent_write()
+
+evtimer_add()
+evtimer_del()
+timeout_add()
+timeout_del()
+
+#include<event2/http.h>
+evhttp_new()
+evhttp_bind_socket()
+evhttp_set_cb()
+evhttp_set_gencb()
